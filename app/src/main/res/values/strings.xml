@@ -16,4 +16,14 @@
     <string name="leer">Leer</string>
     <string name="bailar">Bailar</string>
     <string name="num">No.</string>
+
+    <string name="registrar">Registrar</string>
+    <string name="listado_en_tabla">Listado en Tabla</string>
+    <string name="listado">Listado</string>
+    <string-array name="opciones">
+        <item>@string/registrar</item>
+        <item>@string/listado_en_tabla</item>
+        <item>@string/listado</item>
+    </string-array>
+
 </resources>
