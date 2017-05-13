@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">PersonaBaseDatos</string>
+    <string name="app_name">App Personas</string>
+    <string name="titulo_registrar">REGISTRAR</string>
+    <string name="cedula">Cédula</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="sexo">Sexo</string>
+    <string name="masculino">Masculino</string>
+    <string name="femenino">Femenino</string>
+    <string name="pasatiempo">Pasatiempo</string>
+    <string name="guardar">GUARDAR</string>
+    <string name="modificar">Modificar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="limpiar">Limpiar</string>
+    <string name="programar">Programar</string>
+    <string name="leer">Leer</string>
+    <string name="bailar">Bailar</string>
+    <string name="num">No.</string>
 </resources>
