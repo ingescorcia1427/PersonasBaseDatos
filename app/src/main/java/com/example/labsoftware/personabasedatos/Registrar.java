@@ -1,5 +1,7 @@
 package com.example.labsoftware.personabasedatos;
 
+import android.content.DialogInterface;
+import android.preference.DialogPreference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class Registrar extends AppCompatActivity {
     private EditText cajaCedula, cajaNombre, cajaApellido;
@@ -61,6 +64,8 @@ public class Registrar extends AppCompatActivity {
         }
         return true;
     }
+
+
 
     public void limpiar(View v){
         cajaCedula.setText("");
@@ -125,21 +130,44 @@ public class Registrar extends AppCompatActivity {
                 if (pasatiempos.contains(getResources().getString(R.string.programar))) chkProgramar.setChecked(true);
                 if (pasatiempos.contains(getResources().getString(R.string.leer))) chkLeer.setChecked(true);
                 if (pasatiempos.contains(getResources().getString(R.string.bailar))) chkBailar.setChecked(true);
+            }else {
+                new AlertDialog.Builder(this).setMessage("Cédula no encontrada en el sistema").show();
+             }
+        }
+    }
+
+    public void eliminar(final View v){
+        Persona p;
+
+        if(validarCedula()){
+            p = Datos.buscarPersona(getApplicationContext(),cajaCedula.getText().toString());
+            if(p!=null) {
+                AlertDialog.Builder dialogo_eliminar = new AlertDialog.Builder(this);
+                dialogo_eliminar.setTitle("Importante");
+                dialogo_eliminar.setMessage("¿Desea eliminar esta persona?");
+                dialogo_eliminar.setCancelable(false);
+                dialogo_eliminar.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogo1, int which) {
+                        Persona p = Datos.buscarPersona(getApplicationContext(),cajaCedula.getText().toString());
+                        p.eliminar(getApplicationContext());
+                        limpiar(v);
+                        Toast.makeText(getApplicationContext(),"Persona eliminada exitosamente", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dialogo_eliminar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogo1, int which) {
+                        cajaCedula.requestFocus();
+                    }
+                });
+                dialogo_eliminar.show();
+            }else{
+                new AlertDialog.Builder(this).setMessage("Cédula no encontrada en el sistema").show();
             }
         }
     }
 
-    public void eliminar(View v){
-        Persona p;
-        if(validarCedula()){
-            p = Datos.buscarPersona(getApplicationContext(),cajaCedula.getText().toString());
-            if(p!=null) {
-                p.eliminar(getApplicationContext());
-                new AlertDialog.Builder(this).setMessage("Persona Eliminada Exitosamente").show();
-                limpiar(v);
-            }
-        }
-    }
 
     public int fotoAleatoria(){
         int fotod[] = {R.drawable.images, R.drawable.images2, R.drawable.images3};
