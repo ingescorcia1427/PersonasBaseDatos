@@ -20,6 +20,7 @@
     <string name="registrar">Registrar</string>
     <string name="listado_en_tabla">Listado en Tabla</string>
     <string name="listado">Listado</string>
+    <string name="buscar">BUSCAR</string>
     <string-array name="opciones">
         <item>@string/registrar</item>
         <item>@string/listado_en_tabla</item>
