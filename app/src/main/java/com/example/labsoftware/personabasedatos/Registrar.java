@@ -138,7 +138,6 @@ public class Registrar extends AppCompatActivity {
 
     public void eliminar(final View v){
         Persona p;
-
         if(validarCedula()){
             p = Datos.buscarPersona(getApplicationContext(),cajaCedula.getText().toString());
             if(p!=null) {
@@ -168,10 +167,46 @@ public class Registrar extends AppCompatActivity {
         }
     }
 
+    public void modificar(View v){
+        Persona p, p2;
+        String nombre, apellido, sexo, pasatiempo="";
+        if(validarCedula()){
+            p = Datos.buscarPersona(getApplicationContext(),cajaCedula.getText().toString());
+            if(p!=null) {
+                nombre = cajaNombre.getText().toString();
+                apellido = cajaApellido.getText().toString();
+
+                if(rdMasculino.isChecked()) sexo=getResources().getString(R.string.masculino);
+                else sexo=getResources().getString(R.string.femenino);
+
+                if(chkProgramar.isChecked()){
+                    pasatiempo = getResources().getString(R.string.programar) + ", ";
+                }
+
+                if(chkLeer.isChecked()){
+                    pasatiempo = pasatiempo + getResources().getString(R.string.leer) + ", ";
+                }
+
+                if(chkBailar.isChecked()){
+                    pasatiempo = pasatiempo + getResources().getString(R.string.bailar) + ", ";
+                }
+
+                pasatiempo = pasatiempo.substring(0, pasatiempo.length()-2);
+                p2 = new Persona(p.getFoto(), p.getCedula(), nombre, apellido, sexo, pasatiempo);
+                p2.modificar(getApplicationContext());
+
+                new AlertDialog.Builder(this).setMessage("Persona Modificada Exitosamente").show();
+                limpiar(v);
+            }
+        }
+    }
+
 
     public int fotoAleatoria(){
         int fotod[] = {R.drawable.images, R.drawable.images2, R.drawable.images3};
         int numero = (int)(Math.random()*3);
         return fotod[numero];
     }
+
+
 }
