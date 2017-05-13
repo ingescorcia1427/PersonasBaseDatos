@@ -51,8 +51,9 @@
                 android:text="@string/buscar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
-                android:layout_weight="1" />
+                android:id="@+id/btnbuscar"
+                android:layout_weight="1"
+                android:onClick="buscar" />
 
         </LinearLayout>
 
@@ -86,19 +87,25 @@
             android:textStyle="normal|bold"
             android:textAllCaps="false" />
 
-        <RadioButton
-            android:text="@string/masculino"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rdbMasculino"
-            android:layout_weight="1" />
+            android:layout_weight="1" >
 
-        <RadioButton
-            android:text="@string/femenino"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rdbFemenino"
-            android:layout_weight="1" />
+            <RadioButton
+                android:text="@string/femenino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rdbFemenino"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:text="@string/masculino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rdbMasculino"
+                android:layout_weight="1" />
+        </RadioGroup>
 
         <TextView
             android:text="@string/pasatiempo"
@@ -162,7 +169,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btneliminar"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:onClick="eliminar"/>
 
             <Button
                 android:text="@string/limpiar"

@@ -76,17 +76,19 @@ public class Persona {
         String sql;
 
         //Abrir la conexión de la base de datos en modo escritura
-        PersonasSQLiteOpenHelper aux = new PersonasSQLiteOpenHelper(contexto, "DBPersonas", null, 2);
+        PersonasSQLiteOpenHelper aux = new PersonasSQLiteOpenHelper(contexto, "DBPersonas", null, 3);
         db = aux.getWritableDatabase();
 
         //Insertar forma 1
         sql = "INSERT INTO Personas values('"
-                +this.getFoto()+" ',' "
-                +this.getCedula()+" ',' "
-                +this.getNombre()+" ',' "
-                +this.getApellido()+" ',' "
-                +this.getSexo()+" ',' "
+                +this.getFoto()+"','"
+                +this.getCedula()+"','"
+                +this.getNombre()+"','"
+                +this.getApellido()+"','"
+                +this.getSexo()+"','"
                 +this.getPasatiempo()+"')";
+
+        db.execSQL(sql);
 
         //Insertar forma 2
         /*ContentValues nuevoRegistro = new ContentValues();
@@ -101,7 +103,21 @@ public class Persona {
 
         //Cerrar conexión
         db.close();
+    }
 
+    public void eliminar(Context contexto) {
+        //Declarar variables
+        SQLiteDatabase db;
+        String sql;
+
+        //Abrir la conexión de la base de datos en modo escritura
+        PersonasSQLiteOpenHelper aux = new PersonasSQLiteOpenHelper(contexto, "DBPersonas", null, 3);
+        db = aux.getWritableDatabase();
+
+        //Eliminar
+        sql = "DELETE FROM Personas where cedula='" + this.getCedula()+"'";
+        db.execSQL(sql);
+        db.close();
     }
 
 

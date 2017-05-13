@@ -53,15 +53,23 @@ public class Registrar extends AppCompatActivity {
 
     }
 
+    public boolean validarCedula() {
+        if (cajaCedula.getText().toString().isEmpty()) {
+            cajaCedula.setError("Digite cédula");
+            cajaCedula.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
     public void limpiar(View v){
         cajaCedula.setText("");
         cajaNombre.setText("");
         cajaApellido.setText("");
         rdMasculino.setChecked(true);
-        chkProgramar.setChecked(true);
+        chkProgramar.setChecked(false);
         chkLeer.setChecked(false);
         chkBailar.setChecked(false);
-
         cajaCedula.requestFocus();
     }
 
@@ -74,6 +82,7 @@ public class Registrar extends AppCompatActivity {
             cedula = cajaCedula.getText().toString();
             nombre = cajaNombre.getText().toString();
             apellido = cajaApellido.getText().toString();
+
             if(rdMasculino.isChecked()) sexo=getResources().getString(R.string.masculino);
             else sexo=getResources().getString(R.string.femenino);
 
@@ -82,19 +91,53 @@ public class Registrar extends AppCompatActivity {
             }
 
             if(chkLeer.isChecked()){
-                pasatiempo = getResources().getString(R.string.leer) + ", ";
+                pasatiempo = pasatiempo+getResources().getString(R.string.leer) + ", ";
             }
 
             if(chkBailar.isChecked()){
-                pasatiempo = getResources().getString(R.string.bailar) + ", ";
+                pasatiempo = pasatiempo+getResources().getString(R.string.bailar) + ", ";
             }
 
-            pasatiempo = pasatiempo.substring(pasatiempo.length()-1);
+            pasatiempo = pasatiempo.substring(0, pasatiempo.length()-2);
             p = new Persona(foto, cedula, nombre, apellido, sexo, pasatiempo);
             p.guardar(getApplicationContext());
 
             new AlertDialog.Builder(this).setMessage("Persona guardada Exitosamente").show();
             limpiar(v);
+        }
+    }
+
+
+    public void buscar(View v){
+        Persona p;
+        String pasatiempos;
+        if(validarCedula()){
+            p = Datos.buscarPersona(getApplicationContext(),cajaCedula.getText().toString());
+            if(p!=null) {
+                cajaNombre.setText(p.getNombre());
+                cajaApellido.setText(p.getApellido());
+                //Setear RadioButton
+                if (p.getSexo().equalsIgnoreCase(getResources().getString(R.string.masculino)))
+                    rdMasculino.setChecked(true);
+                else rdFemenino.setChecked(true);
+                //Setear CheckBox
+                pasatiempos = p.getPasatiempo();
+                if (pasatiempos.contains(getResources().getString(R.string.programar))) chkProgramar.setChecked(true);
+                if (pasatiempos.contains(getResources().getString(R.string.leer))) chkLeer.setChecked(true);
+                if (pasatiempos.contains(getResources().getString(R.string.bailar))) chkBailar.setChecked(true);
+            }
+        }
+    }
+
+    public void eliminar(View v){
+        Persona p;
+        if(validarCedula()){
+            p = Datos.buscarPersona(getApplicationContext(),cajaCedula.getText().toString());
+            if(p!=null) {
+                p.eliminar(getApplicationContext());
+                new AlertDialog.Builder(this).setMessage("Persona Eliminada Exitosamente").show();
+                limpiar(v);
+            }
         }
     }
 
